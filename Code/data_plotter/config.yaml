@@ -1,0 +1,5 @@
+data_folder_path: Data/may_21_run1
+processed_data_path: Processed_Data
+processed_filename :  2_6_22_13_57_15.csv
+graph_update_interval: 1000
+serial_port: COM3
