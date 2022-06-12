@@ -1,0 +1,9 @@
+Acu-Vis 2.0 is designed to support FT702-V20, FT702-V22, FT205, FT722 & FT742 sensors.
+
+Windows PC's running 7, 8 and 10 are supported.
+
+Run the file 'setup.exe' and follow the instructions. Windows Administrator rights may be required.
+
+Contact your IT Department for installation assistance. Contact FT Technologies for technical support.
+
+Build 2.0.114

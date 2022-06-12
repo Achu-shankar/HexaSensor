@@ -1,5 +1,5 @@
 from sys import builtin_module_names
-from tokenize import String
+# from tokenize import String
 import serial
 import time
 import csv
