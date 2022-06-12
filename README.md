@@ -1,8 +1,6 @@
 # HexaSensor
 -----------------------------------
 
-Code for sensor array for hexa.
-
 # Requirements
 -----------------------------------
 
