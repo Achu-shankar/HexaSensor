@@ -99,7 +99,7 @@ app.layout = html.Div([
     html.Div([
         html.Div([dcc.Graph(id='wind-speed', figure={} )]),
         html.Div([dcc.Graph(id='wind_dir', figure={})]),
-        html.Div([dcc.Graph(id='wind_dir_polar', figure={})]),
+        # html.Div([dcc.Graph(id='wind_dir_polar', figure={})]),
         html.Div([dcc.Graph(id='wind_acoustic_temp', figure={})]),
     ],style = {"position":"absolute","width":"70%","right":"15%","top":"30%","border-style": "solid","padding":"20px",
                 "border-width": "thin"}),        
@@ -109,7 +109,7 @@ app.layout = html.Div([
         html.Div([dcc.Graph(id='temperature_ms5611', figure={} )]),
         html.Div([dcc.Graph(id='abs_alt_ms5611', figure={})]),
         html.Div([dcc.Graph(id='pressure_ms5611', figure={})]),
-    ],style = {"position":"absolute","width":"70%","right":"15%","top":"300%","border-style": "solid","padding":"20px",
+    ],style = {"position":"absolute","width":"70%","right":"15%","top":"220%","border-style": "solid","padding":"20px",
                 "border-width": "thin"}),   
    
     # html.Hr(),
@@ -117,7 +117,7 @@ app.layout = html.Div([
      html.Div([
         html.Div([dcc.Graph(id='temperature_aht10', figure={})]),
         html.Div([dcc.Graph(id='rel_hum_aht10', figure={})]),
-    ],style = {"position":"absolute","width":"70%","right":"15%","top":"500%","border-style": "solid","padding":"20px",
+    ],style = {"position":"absolute","width":"70%","right":"15%","top":"420%","border-style": "solid","padding":"20px",
                 "border-width": "thin"})
    
 ])  
@@ -126,7 +126,7 @@ app.layout = html.Div([
 @app.callback(
     [Output("wind-speed", "figure"),
      Output("wind_dir", "figure"),
-     Output("wind_dir_polar", "figure"),
+    #  Output("wind_dir_polar", "figure"),
      Output("wind_acoustic_temp", "figure"),
      Output("temperature_ms5611", "figure"),
      Output("abs_alt_ms5611", "figure"),
@@ -138,9 +138,6 @@ app.layout = html.Div([
 )
 
 def update_output(filename):
-    print("was here")
-    
-    print(filename)
     
     fig_wind = {}
     fig_wind_dir = {}
@@ -152,7 +149,6 @@ def update_output(filename):
     fig_relhumaht10 = {}
 
     if filename != None:
-        print(filename)
         data_file_path = os.path.join(folder_name,filename)
         # print(data_file_path)
         try:
@@ -162,7 +158,7 @@ def update_output(filename):
         except Exception as e: 
             print(e)
 
-        fig_wind           = px.line(df,x="time",y= "Wind speed")
+        fig_wind       = px.line(df,x="time",y= "Wind speed")
         fig_wind.update_layout(title_text='Wind speed ', title_x=0.5,title_y=1,title_font_color="RebeccaPurple",title_font_size = 20)
 
         fig_wind_dir = px.line(df,x="time",y= "Wind angle")
@@ -199,7 +195,7 @@ def update_output(filename):
                                         xref="paper",
                                         yref="paper"))
                                         
-    return  fig_wind,fig_wind_dir, fig_wind_dir_polar, fig_wind_acou_temp,\
+    return  fig_wind,fig_wind_dir, fig_wind_acou_temp,\
             fig_tempms5611, fig_absalt5611, fig_pressms5611, \
             fig_tempaht10, fig_relhumaht10
     
