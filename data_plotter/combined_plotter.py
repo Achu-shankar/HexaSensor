@@ -123,12 +123,6 @@ app.layout = html.Div([
 ])  
 
 
-# @app.callback(
-#     Output('dd-output-container', 'children'),
-#     Input('demo-dropdown', 'value')
-# )
-
-
 @app.callback(
     [Output("wind-speed", "figure"),
      Output("wind_dir", "figure"),
@@ -208,7 +202,7 @@ def update_output(filename):
     return  fig_wind,fig_wind_dir, fig_wind_dir_polar, fig_wind_acou_temp,\
             fig_tempms5611, fig_absalt5611, fig_pressms5611, \
             fig_tempaht10, fig_relhumaht10
-    return None
+    
 
 
 if __name__ == '__main__':

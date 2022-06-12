@@ -15,7 +15,6 @@ import datetime
 config_file = open("config.yaml", 'r')
 config_content = yaml.load(config_file, Loader=yaml.FullLoader)
 folder_name = config_content['processed_data_path']
-data_file_name = config_content['processed_filename']
 
 # GRAPH_INTERVAL = config_content['graph_update_interval']
 # NO_DATAPOINTS = 100
