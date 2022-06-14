@@ -143,6 +143,7 @@ bool h12Flag;
 bool pmFlag;
 
 // Pixhawk data
+long time_boot_ms_attitude;
 float roll;
 float pitch;
 float yaw;
@@ -150,6 +151,7 @@ float rollspeed;
 float pitchspeed;
 float yawspeed;
 
+long time_boot_ms_pix_gps;
 long pix_lat;
 long pix_lon;
 long pix_alt;
@@ -157,6 +159,7 @@ long pix_gps_vx;
 long pix_gps_vy;
 long pix_gps_vz;
 
+long time_boot_ms_loc_pos;
 float x;
 float y;
 float z;

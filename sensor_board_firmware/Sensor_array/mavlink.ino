@@ -51,14 +51,15 @@ void Mav_Request_Data()
    */
 
   // To be setup according to the needed information to be requested from the Pixhawk
-  const int  maxStreams = 1;
-//  const uint8_t MAVStreams[maxStreams] = {MAV_DATA_STREAM_EXTENDED_STATUS, MAV_DATA_STREAM_EXTRA1};
+  const int  maxStreams = 3;
+  const uint8_t MAVStreams[maxStreams] = {MAV_DATA_STREAM_POSITION, MAV_DATA_STREAM_EXTENDED_STATUS, MAV_DATA_STREAM_EXTRA1};
+  const uint16_t MAVRates[maxStreams] = {0x2,0x10,0x10};
 //  const uint8_t  MAVStreams[maxStreams] = {MAV_DATA_STREAM_EXTENDED_STATUS,MAV_DATA_STREAM_EXTRA1,MAV_DATA_STREAM_EXTRA2,MAV_DATA_STREAM_EXTRA3};
 //  const uint16_t MAVRates[maxStreams] = {0x02,0x02,0x02,0x02};
-  const uint8_t  MAVStreams[maxStreams] = {MAV_DATA_STREAM_POSITION};
-  const uint16_t MAVRates[maxStreams] = {0x5};
+//  const uint8_t  MAVStreams[maxStreams] = {MAV_DATA_STREAM_ALL};
+//  const uint16_t MAVRates[maxStreams] = {0x02};
     
-  for (int i=0; i < maxStreams; i++) {
+  for (int i=0; i < maxStreams; i++) {   
     /*
      * mavlink_msg_request_data_stream_pack(system_id, component_id, 
      *    &msg, 
@@ -107,6 +108,7 @@ void pixhawk_comm_receive() {
              */
             mavlink_attitude_t attitude;
             mavlink_msg_attitude_decode(&msg, &attitude);
+            time_boot_ms_attitude = attitude.time_boot_ms;
             roll = attitude.roll;
             pitch = attitude.pitch;
             yaw   = attitude.yaw;
@@ -114,8 +116,8 @@ void pixhawk_comm_receive() {
             pitchspeed = attitude.pitchspeed;
             yawspeed  = attitude.yawspeed;
             
-            Serial.print("roll :"); Serial.print(roll);  Serial.println();
-            
+//            Serial.print("roll :"); Serial.print(roll);  Serial.println();
+            Serial.print("roll time stamp :"); Serial.print(time_boot_ms_attitude);  Serial.println();
           }
           break;
 
@@ -127,13 +129,15 @@ void pixhawk_comm_receive() {
             //mavlink_message_t* msg;
             mavlink_local_position_ned_t local_pos;
             mavlink_msg_local_position_ned_decode(&msg, &local_pos);
-            
+            time_boot_ms_loc_pos = local_pos.time_boot_ms;
             x = local_pos.x;
             y = local_pos.y;
             z = local_pos.z;
             vx = local_pos.vx;
             vy = local_pos.vy;
             vz = local_pos.vz;
+            
+            Serial.print("local pos time stamp :"); Serial.print(time_boot_ms_loc_pos);  Serial.println();
           }
           break;
 
@@ -144,6 +148,7 @@ void pixhawk_comm_receive() {
              */
             mavlink_global_position_int_t global_pos;
             mavlink_msg_global_position_int_decode(&msg, &global_pos);
+            time_boot_ms_pix_gps = global_pos.time_boot_ms;
             pix_lat = global_pos.lat;
             pix_lon = global_pos.lon;
             pix_alt = global_pos.alt;
@@ -152,7 +157,7 @@ void pixhawk_comm_receive() {
             pix_gps_vz = global_pos.vz;
            
             
-            
+            Serial.print("gps time stamp :"); Serial.print(time_boot_ms_pix_gps);  Serial.println();
 //            Serial.print("lat :"); Serial.print(global_pos.lat);  Serial.println();
           }
           break;

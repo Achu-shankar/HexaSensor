@@ -48,15 +48,15 @@ void PrintValues()
 //  Serial.print("pitch: ");    Serial.println(pitch);
 //  Serial.print("yaw: "); Serial.println(yaw);
 //
-  for (int x = 0 ; x < 3 ; x++)
-  {
-    Serial.print("Pixel: ");
-    Serial.print(x);
-    Serial.print(": ");
-    Serial.print(IrCamDataArray[x], 2);
-    Serial.print("C");
-    Serial.println();
-  }
+//  for (int x = 0 ; x < 3 ; x++)
+//  {
+//    Serial.print("Pixel: ");
+//    Serial.print(x);
+//    Serial.print(": ");
+//    Serial.print(IrCamDataArray[x], 2);
+//    Serial.print("C");
+//    Serial.println();
+//  }
 
 //  Serial.print(Hour);Serial.print(",");Serial.println(Second);
 //Serial.print("TimeStamp");Serial.println(timeStampMemoryCard);

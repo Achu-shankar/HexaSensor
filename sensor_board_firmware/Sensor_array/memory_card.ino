@@ -32,6 +32,8 @@ void WriteSensorReadingToMemCard()
   tempStr = String(absolute_altitude_ms5611,4)+",";
   WriteToFile(SensorDataFile,tempStr);
 
+  tempStr = String(time_boot_ms_attitude)+",";
+  WriteToFile(SensorDataFile,tempStr);
   tempStr = String(roll,4)+",";
   WriteToFile(SensorDataFile,tempStr);
   tempStr = String(pitch,4)+",";
@@ -45,6 +47,8 @@ void WriteSensorReadingToMemCard()
   tempStr = String(yawspeed,4)+",";
   WriteToFile(SensorDataFile,tempStr);
 
+  tempStr = String(time_boot_ms_loc_pos)+",";
+  WriteToFile(SensorDataFile,tempStr);
   tempStr = String(x,4)+",";
   WriteToFile(SensorDataFile,tempStr);
   tempStr = String(y,4)+",";
@@ -58,6 +62,8 @@ void WriteSensorReadingToMemCard()
   tempStr = String(vz,4)+",";
   WriteToFile(SensorDataFile,tempStr);
 
+  tempStr = String(time_boot_ms_pix_gps)+",";
+  WriteToFile(SensorDataFile,tempStr);
   tempStr = String(pix_lat)+",";
   WriteToFile(SensorDataFile,tempStr);
   tempStr = String(pix_lon)+",";
@@ -144,6 +150,8 @@ void AddFileColHeadings(){
   tempStr = "Absolute_altitude_ms5611,";
   WriteToFile(SensorDataFile,tempStr);
 
+  tempStr = "timestamp_pix_attitude,";
+  WriteToFile(SensorDataFile,tempStr);
   tempStr = "Roll,";
   WriteToFile(SensorDataFile,tempStr);
   tempStr = "Pitch,";
@@ -157,6 +165,8 @@ void AddFileColHeadings(){
   tempStr ="Yaw speed,";
   WriteToFile(SensorDataFile,tempStr);
 
+  tempStr = "timestamp_pix_loc_pos,";
+  WriteToFile(SensorDataFile,tempStr);
   tempStr = "x,";
   WriteToFile(SensorDataFile,tempStr);
   tempStr = "y,";
@@ -170,6 +180,8 @@ void AddFileColHeadings(){
   tempStr = "vz,";
   WriteToFile(SensorDataFile,tempStr);
 
+  tempStr = "timestamp_pix_gps,";
+  WriteToFile(SensorDataFile,tempStr);
   tempStr = "pix_lat,";
   WriteToFile(SensorDataFile,tempStr);
   tempStr = "pix_lon,";
