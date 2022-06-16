@@ -84,7 +84,7 @@ app.layout = html.Div([
         html.Div([
             dcc.Dropdown(options = list_of_files_dict,
                          value = list_of_files[0], 
-                         id='file-dropdown'),
+                         id='file-dropdown',multi = True),
         ],style={"margin": "5px",'width': '48%', 'display': 'inline-block'}),
         
         html.Div([
@@ -127,20 +127,44 @@ app.layout = html.Div([
     Input('yaxis-column', 'value'),
     Input('plot-type-dropdown', 'value'))
 
-def plot_update(filename, xaxis_column,yaxis_column, plot_type):
-    print(xaxis_column,yaxis_column,filename)
+def plot_update(filenames, xaxis_column,yaxis_column, plot_type):
+    # print(xaxis_column,yaxis_column,filenames)
+    if type(filenames) is not list:
+        filenames = [filenames]
+        # print('not list')
 
-    data_file_path = os.path.join(folder_name,filename)
-    try:
-        df = pd.read_csv(data_file_path,error_bad_lines=False) 
-    except Exception as e: 
-        print(e)
+    frames = dict()
+
+    # df2 = pd.DataFrame()
+
+    for ind,file in enumerate(filenames):
+        data_file_path = os.path.join(folder_name,file)
+        print(data_file_path)
+        try:
+            df = pd.read_csv(data_file_path,error_bad_lines=False) 
+            if ind==0:
+                df2 = df.copy()
+            else:
+                df2.append(df[[xaxis_column,yaxis_column]])
+        except Exception as e: 
+            print(e)
+        # frames[file] = df
+        # df2[file] = frames[file][yaxis_column]
+        
+
+    print(df)
+
+    # data_file_path = os.path.join(folder_name,filename)
+    # try:
+    #     df = pd.read_csv(data_file_path,error_bad_lines=False) 
+    # except Exception as e: 
+    #     print(e)
     if plot_type == "Scatter":
-        fig = px.scatter(df,x = xaxis_column,y = yaxis_column)
+        fig = px.scatter(df2,x = xaxis_column,y = yaxis_column)
     elif plot_type == "Line":
-        fig = px.line(df,x = xaxis_column,y = yaxis_column)
+        fig = px.line(df2,x = xaxis_column,y = yaxis_column)
     elif plot_type == "Polar":
-        fig = px.scatter_polar(df, r=yaxis_column, theta=xaxis_column ,color=yaxis_column)
+        fig = px.scatter_polar(df2, r=df2.columns, theta=xaxis_column ,color=yaxis_column)
     else :
         fig ={}
     # fig.update_layout(title_text='Wind speed ', title_x=0.5,title_y=1,title_font_color="RebeccaPurple",title_font_size = 20)

@@ -72,6 +72,12 @@ app.layout = html.Div([
     html.Div([dcc.Graph(id='rel_hum_aht10', figure={})],style = {"width":"50%"})
     ], style = {"display":"flex","justify-content": "center","flex-direction": "row"}),
 
+    html.Div([        
+    html.Div([dcc.Graph(id='roll', figure={})],style = {"width":"33%"}),
+    html.Div([dcc.Graph(id='pitch', figure={})],style = {"width":"33%"}),
+    html.Div([dcc.Graph(id='yaw', figure={})],style = {"width":"33%"})
+    ], style = {"display":"flex","justify-content": "center","flex-direction": "row"}),
+
     
    
 ])  
@@ -88,7 +94,10 @@ app.layout = html.Div([
      Output("temperature_aht10", "figure"),
      Output("rel_hum_aht10", "figure"), 
      Output("wind_dir", "figure"), 
-     Output("wind_acoustic_temp", "figure")], 
+     Output("wind_acoustic_temp", "figure"),
+     Output("roll", "figure"), 
+     Output("pitch", "figure"), 
+     Output("yaw", "figure")], 
     [Input("wind-speed-update", "n_intervals")]
 )
 
@@ -121,7 +130,11 @@ def update_graph(interval):
                        5:'pressms5611',
                        6:'absaltms5611',
                        7:'temp_aht10',
-                       8:'relhumaht10'}, 
+                       8:'relhumaht10',
+                       9:'roll',
+                       10:'pitch',
+                       11:'yaw',
+                       23:'pix_alt'}, 
                     inplace = True)
     # print(df.head(3))
     fig_wind           = px.line(df,x="x",y= "windspeed")
@@ -149,6 +162,16 @@ def update_graph(interval):
     fig_relhumaht10 = px.line(df,x="x",y= "relhumaht10", title='Relative Humidity aht10')
     fig_relhumaht10.update_layout(title_text='Relative Humidity aht10', title_x=0.5)
 
+
+    fig_roll  = px.line(df,x="x",y= "tempms5611", title='Temperature ms5611')
+    fig_roll.update_layout(title_text='Temperature ms5611', title_x=0.5)
+    
+    fig_pitch  = px.line(df,x="x",y= "absaltms5611", title='Absolute altitude ms5611')
+    fig_pitch.update_layout(title_text='Absolute altitude ms5611 ', title_x=0.5)
+
+    fig_yaw = px.line(df,x="x",y= "pressms5611", title='Pressure ms5611')
+    fig_yaw.update_layout(title_text='Pressure ms5611', title_x=0.5)
+
     fig_wind_dir.add_annotation(dict(font=dict(color='black',size=18    ),
                                         x=0.5,
                                         y=1.15,
@@ -169,7 +192,7 @@ def update_graph(interval):
     # return  container, fig_wind, fig_tempms5611, fig_absalt5611, fig_pressms5611
     return  container, fig_wind,fig_tempms5611, \
             fig_absalt5611, fig_pressms5611, \
-            fig_tempaht10, fig_relhumaht10, fig_wind_dir, fig_wind_acou_temp
+            fig_tempaht10, fig_relhumaht10, fig_wind_dir, fig_wind_acou_temp,fig_roll,fig_pitch,fig_yaw
 
 
 @app.callback(
