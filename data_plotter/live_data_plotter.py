@@ -78,6 +78,10 @@ app.layout = html.Div([
     html.Div([dcc.Graph(id='yaw', figure={})],style = {"width":"33%"})
     ], style = {"display":"flex","justify-content": "center","flex-direction": "row"}),
 
+    html.Div([        
+    html.Div([dcc.Graph(id='pix_alt', figure={})],style = {"width":"33%"}),
+    ], style = {"display":"flex","justify-content": "center","flex-direction": "row"}),
+
     
    
 ])  
@@ -97,7 +101,8 @@ app.layout = html.Div([
      Output("wind_acoustic_temp", "figure"),
      Output("roll", "figure"), 
      Output("pitch", "figure"), 
-     Output("yaw", "figure")], 
+     Output("yaw", "figure"),
+     Output("pix_alt", "figure")], 
     [Input("wind-speed-update", "n_intervals")]
 )
 
@@ -163,14 +168,17 @@ def update_graph(interval):
     fig_relhumaht10.update_layout(title_text='Relative Humidity aht10', title_x=0.5)
 
 
-    fig_roll  = px.line(df,x="x",y= "tempms5611", title='Temperature ms5611')
-    fig_roll.update_layout(title_text='Temperature ms5611', title_x=0.5)
+    fig_roll  = px.line(df,x="x",y= "roll", title='Roll')
+    fig_roll.update_layout(title_text='Roll', title_x=0.5)
     
-    fig_pitch  = px.line(df,x="x",y= "absaltms5611", title='Absolute altitude ms5611')
-    fig_pitch.update_layout(title_text='Absolute altitude ms5611 ', title_x=0.5)
+    fig_pitch  = px.line(df,x="x",y= "pitch", title='Pitch')
+    fig_pitch.update_layout(title_text='Pitch ', title_x=0.5)
 
-    fig_yaw = px.line(df,x="x",y= "pressms5611", title='Pressure ms5611')
-    fig_yaw.update_layout(title_text='Pressure ms5611', title_x=0.5)
+    fig_yaw = px.line(df,x="x",y= "yaw", title='Yaw')
+    fig_yaw.update_layout(title_text='Yaw', title_x=0.5)
+
+    fig_pixalt = px.line(df,x="x",y= "pix_alt", title='Altitude')
+    fig_pixalt.update_layout(title_text='Altitude', title_x=0.5)
 
     fig_wind_dir.add_annotation(dict(font=dict(color='black',size=18    ),
                                         x=0.5,
@@ -192,7 +200,8 @@ def update_graph(interval):
     # return  container, fig_wind, fig_tempms5611, fig_absalt5611, fig_pressms5611
     return  container, fig_wind,fig_tempms5611, \
             fig_absalt5611, fig_pressms5611, \
-            fig_tempaht10, fig_relhumaht10, fig_wind_dir, fig_wind_acou_temp,fig_roll,fig_pitch,fig_yaw
+            fig_tempaht10, fig_relhumaht10, fig_wind_dir, fig_wind_acou_temp,\
+            fig_roll,fig_pitch,fig_yaw,fig_pixalt
 
 
 @app.callback(
