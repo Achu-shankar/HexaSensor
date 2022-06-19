@@ -152,6 +152,7 @@ void pixhawk_comm_receive() {
             pix_lat = global_pos.lat;
             pix_lon = global_pos.lon;
             pix_alt = global_pos.alt;
+            pix_relative_alt = global_pos.relative_alt;
             pix_gps_vx = global_pos.vx;
             pix_gps_vy = global_pos.vy;
             pix_gps_vz = global_pos.vz;

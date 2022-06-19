@@ -77,13 +77,16 @@ void WriteSensorReadingToMemCard()
   tempStr = String(pix_gps_vz)+",";
   WriteToFile(SensorDataFile,tempStr);
   
-  tempStr = String(latitude,7)+",";
+  tempStr = String(latitude)+",";
   WriteToFile(SensorDataFile,tempStr);
-  tempStr = String(longitude,7)+",";
+  tempStr = String(longitude)+",";
   WriteToFile(SensorDataFile,tempStr);
-  tempStr = String(altitude_gps,7)+",";
+  tempStr = String(altitude_gps)+",";
   WriteToFile(SensorDataFile,tempStr);
- 
+  
+  tempStr = String(pix_relative_alt)+",";
+  WriteToFile(SensorDataFile,tempStr);
+  
   if (NewDataRcvd){
     for (int x = 0 ; x < 768 ; x++)
     {
@@ -200,6 +203,8 @@ void AddFileColHeadings(){
   tempStr = "longitude,";
   WriteToFile(SensorDataFile,tempStr);
   tempStr = "altitude_gps,";
+  WriteToFile(SensorDataFile,tempStr);
+  tempStr = "relative_altitude_gps,";
   WriteToFile(SensorDataFile,tempStr);
 
   for (int x = 0 ; x < 768 ; x++)

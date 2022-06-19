@@ -29,12 +29,12 @@ void PrintValues()
     
 
 //////  
-//  Serial.print("Temp aht10: "); Serial.println(temperature_aht10);
-//  Serial.print("Rel humidity: "); Serial.println(relative_humidity_aht10);
-////  
-//  Serial.print("Temp ms5611: ");  Serial.println(temperature_ms5611);
-//  Serial.print("Press ms5611: "); Serial.println(pressure_ms5611);
-//  Serial.print("Abs altitude: "); Serial.println(absolute_altitude_ms5611);
+  Serial.print("Temp aht10: "); Serial.println(temperature_aht10);
+  Serial.print("Rel humidity: "); Serial.println(relative_humidity_aht10);
+//  
+  Serial.print("Temp ms5611: ");  Serial.println(temperature_ms5611);
+  Serial.print("Press ms5611: "); Serial.println(pressure_ms5611);
+  Serial.print("Abs altitude: "); Serial.println(absolute_altitude_ms5611);
   
 //  Serial.print("Latitude: ");     Serial.println(latitude);
 //  Serial.print("Longitude: ");    Serial.println(longitude);

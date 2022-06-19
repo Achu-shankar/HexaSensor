@@ -155,6 +155,7 @@ long time_boot_ms_pix_gps;
 long pix_lat;
 long pix_lon;
 long pix_alt;
+long pix_relative_alt;
 long pix_gps_vx;
 long pix_gps_vy;
 long pix_gps_vz;
@@ -224,6 +225,7 @@ void setup() {
   pinMode(WIND_RCV_ENABLE_PIN, OUTPUT); 
   pinMode(LED_BUILTIN, OUTPUT);
   digitalWrite(WIND_RCV_ENABLE_PIN, HIGH);
+
 
 //xTaskCreate(
   xTaskCreatePinnedToCore(
