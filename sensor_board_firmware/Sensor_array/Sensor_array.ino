@@ -29,8 +29,8 @@
 //#define GPS_RX_PIN 26
 //#define GPS_TX_PIN 25
 
-#define pxSerial Serial1
-//#define telemetrySerial Serial1
+//#define pxSerial Serial1
+#define telemetrySerial Serial1
 
 
 // --------------------------- Default  definitions -------------------------------
@@ -52,9 +52,9 @@ paramsMLX90640 MLX90640;
 //RF24 radio(TELE_CE_PIN, TELE_CSN_PIN); // Create a Radio || using pin 14 for the CE pin, and pin 12 for the CSN pin
 //RF24Network network(radio); 
 DS3231 Clock;
-//SoftwareSerial pxSerial(33,32); // RX, TX
+SoftwareSerial pxSerial(33,32); // RX, TX
 SerialTransfer IrCamSerialTransfer;
-SoftwareSerial telemetrySerial(35,14);
+//SoftwareSerial telemetrySerial(35,14);
 
 
 //TinyGPSCustom pdop(GPS, "GNGLL", 1); // $GPGSA sentence, 15th element
@@ -196,16 +196,15 @@ TaskHandle_t Task1;
   
 void setup() {
   Serial.begin(57600);  
-//  pxSerial.begin(57600);
-  pxSerial.begin(57600,SERIAL_8N1,33,32);
+  pxSerial.begin(57600);
+//  pxSerial.begin(57600,SERIAL_8N1,33,32);
   Mav_Request_Data();
   delay(50);
   Wire.begin();
   Wire.setClock(400000); //Increase I2C clock speed to 400kHz
   WindSerial.begin(9600);      
-  telemetrySerial.begin(57600);
-//  telemetrySerial.begin(57600,SERIAL_8N1,12,14);
-////  GpsSerial.begin(gps_baud_rate);  
+//  telemetrySerial.begin(57600);
+  telemetrySerial.begin(57600,SERIAL_8N1,12,14);
   
   
   

@@ -61,10 +61,6 @@
 
 void TransmitSensorReading(){
   
-//  telemetrySerial.print("Wind Speed:"); telemetrySerial.print(wind_speed); telemetrySerial.print(",");
-//  telemetrySerial.print("Wind Angle:"); telemetrySerial.print(wind_angle); telemetrySerial.print(",");
-//  telemetrySerial.print("Temp wind sen:"); telemetrySerial.println(temperature_acoustic_wind_sensor);
-
 
   telemetrySerial.print(wind_speed); telemetrySerial.print(",");
   telemetrySerial.print(wind_angle); telemetrySerial.print(",");
@@ -77,6 +73,7 @@ void TransmitSensorReading(){
   telemetrySerial.print(temperature_aht10);       telemetrySerial.print(",");
   telemetrySerial.print(relative_humidity_aht10); telemetrySerial.print(",");
 
+  telemetrySerial.print(time_boot_ms_attitude);telemetrySerial.print(",");
   telemetrySerial.print(roll); telemetrySerial.print(",");
   telemetrySerial.print(pitch); telemetrySerial.print(",");
   telemetrySerial.print(yaw); telemetrySerial.print(",");
@@ -84,7 +81,8 @@ void TransmitSensorReading(){
   telemetrySerial.print(rollspeed); telemetrySerial.print(",");
   telemetrySerial.print(pitchspeed); telemetrySerial.print(",");
   telemetrySerial.print(yawspeed); telemetrySerial.print(",");
-  
+
+  telemetrySerial.print(time_boot_ms_loc_pos);telemetrySerial.print(",");
   telemetrySerial.print(x); telemetrySerial.print(",");
   telemetrySerial.print(y); telemetrySerial.print(",");
   telemetrySerial.print(z); telemetrySerial.print(",");
@@ -93,11 +91,12 @@ void TransmitSensorReading(){
   telemetrySerial.print(vy); telemetrySerial.print(",");
   telemetrySerial.print(vz); telemetrySerial.print(",");
 
+  telemetrySerial.print(time_boot_ms_pix_gps);telemetrySerial.print(",");
   telemetrySerial.print(pix_lat); telemetrySerial.print(",");
   telemetrySerial.print(pix_lon); telemetrySerial.print(",");
-  telemetrySerial.print(pix_alt); 
+  telemetrySerial.print(pix_alt); telemetrySerial.print('\n');
 
-  telemetrySerial.println(timeStampMemoryCard);
+//  telemetrySerial.println(timeStampMemoryCard);
    
   
 }

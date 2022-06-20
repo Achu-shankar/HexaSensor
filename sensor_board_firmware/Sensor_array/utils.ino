@@ -21,9 +21,9 @@ void combineSensorData(){
 void PrintValues()
 {
 //  Serial.print("Wind Speed text: ");Serial.println(wind_inp_buffer_temp);
-//  Serial.print("Wind Speed: "); Serial.println(wind_speed);
-//  Serial.print("Wind Angle: "); Serial.println(wind_angle);
-//  Serial.print("Temp acoustic wind sensor: "); Serial.println(temperature_acoustic_wind_sensor);
+  Serial.print("Wind Speed: "); Serial.println(wind_speed);
+  Serial.print("Wind Angle: "); Serial.println(wind_angle);
+  Serial.print("Temp acoustic wind sensor: "); Serial.println(temperature_acoustic_wind_sensor);
 //  Serial.print("Wind sensor status: "); Serial.println(wind_sensor_status);
 //  Serial.print("Temp reading validity: "); Serial.println(temp_reading_validity);
     

@@ -3,7 +3,6 @@
 void UpdateWindSensorReading()
 {
   
-//  delay(190);
 
   currentMillis = millis();
   if (currentMillis - prevMillis >= wind_sensor_reading_interval) {

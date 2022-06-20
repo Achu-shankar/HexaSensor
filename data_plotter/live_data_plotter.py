@@ -42,67 +42,44 @@ app.layout = html.Div([
         style = {'width':"10%","position":"relative",'left':'5%'}),
     html.Br(),
 
-    # html.Div([
-    # dcc.Graph(id='wind-speed', figure={}),
-    # dcc.Graph(id='wind_dir', figure={}),
-    # ], style = {'width':"50%","position":"relative",'left':'25%'}),
 
     html.Div([        
-    html.Div([dcc.Graph(id='wind-speed', figure={})],style = {"width":"33%"}),
-    html.Div([dcc.Graph(id='wind_dir', figure={})],style = {"width":"33%"}),
-    html.Div([dcc.Graph(id='wind_acoustic_temp', figure={})],style = {"width":"33%"})
+    html.Div([dcc.Graph(id='wind-speed', figure={})],style = {"width":"50%"}),
+    html.Div([dcc.Graph(id='wind_dir', figure={})],style = {"width":"50%"})
     ], style = {"display":"flex","justify-content": "center","flex-direction": "row"}),
-
-    # html.Div([        
-    # html.Div([dcc.Graph(id='wind-speed', figure={})],style = {"width":"50%"}),
-    # html.Div([dcc.Graph(id='wind_dir', figure={})],style = {"width":"50%"})
-    # ], style = {"display":"flex","justify-content": "center","flex-direction": "row"}),
 
     dcc.Interval(id="wind-speed-update",
                 interval=int(GRAPH_INTERVAL),
                 n_intervals=0),
     html.Div([        
-    html.Div([dcc.Graph(id='temperature_ms5611', figure={})],style = {"width":"33%"}),
-    html.Div([dcc.Graph(id='abs_alt_ms5611', figure={})],style = {"width":"33%"}),
+    html.Div([dcc.Graph(id='temperature', figure={})],style = {"width":"33%"}),
+    html.Div([dcc.Graph(id='rel_hum_aht10', figure={})],style = {"width":"33%"}),
     html.Div([dcc.Graph(id='pressure_ms5611', figure={})],style = {"width":"33%"})
     ], style = {"display":"flex","justify-content": "center","flex-direction": "row"}),
 
     html.Div([        
-    html.Div([dcc.Graph(id='temperature_aht10', figure={})],style = {"width":"50%"}),
-    html.Div([dcc.Graph(id='rel_hum_aht10', figure={})],style = {"width":"50%"})
+    html.Div([dcc.Graph(id='attitude', figure={})],style = {"width":"33%"}),
+    html.Div([dcc.Graph(id='z', figure={})],style = {"width":"33%"}),
+    html.Div([dcc.Graph(id='abs_alt_ms5611', figure={})],style = {"width":"33%"}),
     ], style = {"display":"flex","justify-content": "center","flex-direction": "row"}),
 
-    html.Div([        
-    html.Div([dcc.Graph(id='roll', figure={})],style = {"width":"33%"}),
-    html.Div([dcc.Graph(id='pitch', figure={})],style = {"width":"33%"}),
-    html.Div([dcc.Graph(id='yaw', figure={})],style = {"width":"33%"})
-    ], style = {"display":"flex","justify-content": "center","flex-direction": "row"}),
-
-    html.Div([        
-    html.Div([dcc.Graph(id='pix_alt', figure={})],style = {"width":"33%"}),
-    ], style = {"display":"flex","justify-content": "center","flex-direction": "row"}),
-
-    
-   
 ])  
 
 
 # ------------------------------------------------------------------------------
 # # Connect the Plotly graphs with Dash Components
 @app.callback(
-    [Output("output_container", "children"), 
+    [
+     Output("output_container", "children"), 
      Output("wind-speed", "figure"),
-     Output("temperature_ms5611", "figure"),
-     Output("abs_alt_ms5611", "figure"),
+     Output("wind_dir", "figure"),
+     Output("temperature", "figure"),
      Output("pressure_ms5611", "figure"),
-     Output("temperature_aht10", "figure"),
-     Output("rel_hum_aht10", "figure"), 
-     Output("wind_dir", "figure"), 
-     Output("wind_acoustic_temp", "figure"),
-     Output("roll", "figure"), 
-     Output("pitch", "figure"), 
-     Output("yaw", "figure"),
-     Output("pix_alt", "figure")], 
+     Output("rel_hum_aht10", "figure"),  
+     Output("attitude", "figure"), 
+     Output("z", "figure"), 
+     Output("abs_alt_ms5611", "figure")
+     ], 
     [Input("wind-speed-update", "n_intervals")]
 )
 
@@ -112,7 +89,7 @@ app.layout = html.Div([
 
 def update_graph(interval):
    
-    container = "Time passed: {}s".format(interval)
+    container = "Time passed: {}s".format(interval*GRAPH_INTERVAL/1000)
 
     f =  open(base_file_path,"r")
     data_file_name_indx =  int(f.readline())
@@ -136,23 +113,28 @@ def update_graph(interval):
                        6:'absaltms5611',
                        7:'temp_aht10',
                        8:'relhumaht10',
-                       9:'roll',
-                       10:'pitch',
-                       11:'yaw',
-                       23:'pix_alt'}, 
+                       10:'roll',
+                       11:'pitch',
+                       12:'yaw',
+                       19:'z',
+                       26:'pix_alt'
+                    }, 
                     inplace = True)
+    df["z"] = -1*df["z"]
     # print(df.head(3))
     fig_wind           = px.line(df,x="x",y= "windspeed")
     fig_wind.update_layout(title_text='Wind speed ', title_x=0.5,title_y=1)
 
-    fig_wind_acou_temp = px.line(df,x="x",y= "wind_ac_temp")
-    fig_wind_acou_temp.update_layout(title_text='Wind Acoustic Temperature ', title_x=0.5,title_y=1)
+    # fig_wind_acou_temp = px.line(df,x="x",y= "wind_ac_temp")
+    # fig_wind_acou_temp.update_layout(title_text='Wind Acoustic Temperature ', title_x=0.5,title_y=1)
 
-    fig_wind_dir    = px.scatter_polar(df, r="windspeed", theta="wind_dir" ,color="windspeed")
+    fig_wind_dir    = px.scatter_polar(df, r="windspeed", theta="wind_dir" ,color="windspeed", render_mode='webgl')
     fig_wind_dir.update_layout(title_text='Wind direction ', title_x=0.5, title_y=1)
 
-    fig_tempms5611  = px.line(df,x="x",y= "tempms5611", title='Temperature ms5611')
-    fig_tempms5611.update_layout(title_text='Temperature ms5611', title_x=0.5)
+    # fig_tempms5611  = px.line(df,x="x",y= "tempms5611", title='Temperature ms5611')
+    # fig_tempms5611.update_layout(title_text='Temperature ms5611', title_x=0.5)
+
+    # fig_wind_acou_temp.add_trace(fig_tempms5611.data[0])
     
     fig_absalt5611  = px.line(df,x="x",y= "absaltms5611", title='Absolute altitude ms5611')
     fig_absalt5611.update_layout(title_text='Absolute altitude ms5611 ', title_x=0.5)
@@ -160,27 +142,87 @@ def update_graph(interval):
     fig_pressms5611 = px.line(df,x="x",y= "pressms5611", title='Pressure ms5611')
     fig_pressms5611.update_layout(title_text='Pressure ms5611', title_x=0.5)
 
-
-    fig_tempaht10   = px.line(df,x="x",y= "temp_aht10", title='Temperature aht10')
-    fig_tempaht10.update_layout(title_text='Temperature aht10', title_x=0.5)
+    # fig_tempaht10   = px.line(df,x="x",y= "temp_aht10", title='Temperature aht10')
+    # fig_tempaht10.update_layout(title_text='Temperature aht10', title_x=0.5)
 
     fig_relhumaht10 = px.line(df,x="x",y= "relhumaht10", title='Relative Humidity aht10')
     fig_relhumaht10.update_layout(title_text='Relative Humidity aht10', title_x=0.5)
 
 
-    fig_roll  = px.line(df,x="x",y= "roll", title='Roll')
-    fig_roll.update_layout(title_text='Roll', title_x=0.5)
+    fig_temp = go.Figure()
+    fig_temp.add_trace(go.Scatter(x=df["x"], y=df["tempms5611"],
+                        mode='lines',
+                        name='MS5611'))
+    fig_temp.add_trace(go.Scatter(x=df["x"], y=df["temp_aht10"],
+                        mode='lines',
+                        name='AHT10'))
+    fig_temp.add_trace(go.Scatter(x=df["x"], y=df["wind_ac_temp"],
+                        mode='lines',
+                        name='Wind Sensor'))
+
+    fig_temp.update_layout(
+        title="Atmospheric Temperature ",
+        title_x=0.5,
+        xaxis_title="# data point",
+        yaxis_title="Temperature  Reading (°C)",
+        font=dict(
+            size=12
+        ),
+        legend=dict(
+        orientation="h",
+        yanchor="bottom",
+        y=1.02,
+        xanchor="right",
+        x=1
+            )
+    )
+
+
+    # fig_roll  = px.line(df,x="x",y= "roll", title='Roll')
+    # fig_roll.update_layout(title_text='Roll', title_x=0.5)
     
-    fig_pitch  = px.line(df,x="x",y= "pitch", title='Pitch')
-    fig_pitch.update_layout(title_text='Pitch ', title_x=0.5)
+    # fig_pitch  = px.line(df,x="x",y= "pitch", title='Pitch')
+    # fig_pitch.update_layout(title_text='Pitch ', title_x=0.5)
 
-    fig_yaw = px.line(df,x="x",y= "yaw", title='Yaw')
-    fig_yaw.update_layout(title_text='Yaw', title_x=0.5)
+    # fig_yaw = px.line(df,x="x",y= "yaw", title='Yaw')
+    # fig_yaw.update_layout(title_text='Yaw', title_x=0.5)
 
-    fig_pixalt = px.line(df,x="x",y= "pix_alt", title='Altitude')
-    fig_pixalt.update_layout(title_text='Altitude', title_x=0.5)
+    # fig_pixalt = px.line(df,x="x",y= "pix_alt", title='Altitude')
+    # fig_pixalt.update_layout(title_text='Altitude', title_x=0.5)
 
-    fig_wind_dir.add_annotation(dict(font=dict(color='black',size=18    ),
+    fig_att = go.Figure()
+    fig_att.add_trace(go.Scatter(x=df["x"], y=df["roll"],
+                        mode='lines',
+                        name='roll'))
+    fig_att.add_trace(go.Scatter(x=df["x"], y=df["pitch"],
+                        mode='lines',
+                        name='pitch'))
+    fig_att.add_trace(go.Scatter(x=df["x"], y=df["yaw"],
+                        mode='lines',
+                        name='yaw'))
+
+    fig_att.update_layout(
+        title="Hexa attitude",
+        title_x=0.5,
+        xaxis_title="# data point",
+        yaxis_title="Rad",
+        font=dict(
+            size=12
+        ),
+        legend=dict(
+        orientation="h",
+        yanchor="bottom",
+        y=1.02,
+        xanchor="right",
+        x=1
+        )
+    )
+
+    fig_pixz = px.line(df,x="x",y= "z", title='Local Altitude')
+    fig_pixz.update_layout(title_text='Local Altitude', title_x=0.5)
+
+
+    fig_wind_dir.add_annotation(dict(font=dict(color='black',size=18 ),
                                         x=0.5,
                                         y=1.15,
                                         showarrow=False,
@@ -197,11 +239,11 @@ def update_graph(interval):
 
     
 
-    # return  container, fig_wind, fig_tempms5611, fig_absalt5611, fig_pressms5611
-    return  container, fig_wind,fig_tempms5611, \
-            fig_absalt5611, fig_pressms5611, \
-            fig_tempaht10, fig_relhumaht10, fig_wind_dir, fig_wind_acou_temp,\
-            fig_roll,fig_pitch,fig_yaw,fig_pixalt
+    return  container, fig_wind,fig_wind_dir, fig_temp, fig_pressms5611,fig_relhumaht10,fig_att, fig_pixz, fig_absalt5611
+    # return  container, fig_wind,fig_tempms5611, \
+    #         fig_absalt5611, fig_pressms5611, \
+    #         fig_tempaht10, fig_relhumaht10,  fig_wind_dir, fig_wind_acou_temp #,\
+    #         # fig_roll,fig_pitch,fig_yaw,fig_pixalt
 
 
 @app.callback(
