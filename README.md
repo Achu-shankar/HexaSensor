@@ -15,4 +15,5 @@
    - tailer    ``` pip3 install tailer ```
    - yaml      ``` pip3 install PyYAML ```
    - csv       ``` pip3 install python-csv ```
+   - orjson    ``` pip3 install orjson ```
    
