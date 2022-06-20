@@ -83,6 +83,8 @@ void TransmitSensorReading(){
   telemetrySerial.print(yawspeed); telemetrySerial.print(",");
 
   telemetrySerial.print(time_boot_ms_loc_pos);telemetrySerial.print(",");
+  x = random(0, 200)/100.0;
+  y = random(0, 200)/100.0;
   telemetrySerial.print(x); telemetrySerial.print(",");
   telemetrySerial.print(y); telemetrySerial.print(",");
   telemetrySerial.print(z); telemetrySerial.print(",");
