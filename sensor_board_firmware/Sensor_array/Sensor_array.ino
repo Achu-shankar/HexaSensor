@@ -203,7 +203,7 @@ void setup() {
   Wire.begin();
   Wire.setClock(400000); //Increase I2C clock speed to 400kHz
   WindSerial.begin(9600);      
-  telemetrySerial.begin(19200);
+  telemetrySerial.begin(57600);
 //  telemetrySerial.begin(57600,SERIAL_8N1,12,14);
   
   

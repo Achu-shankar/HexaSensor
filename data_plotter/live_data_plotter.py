@@ -130,7 +130,7 @@ def update_graph(interval):
         yaxis_title="Wind Speed(kn)",)
 
    
-    fig_wind_dir    = px.scatter_polar(df, r="windspeed", theta="wind_dir" ,color="windspeed", render_mode="webgl")
+    fig_wind_dir    = px.scatter_polar(df, r="windspeed", theta="wind_dir" ,color="windspeed", size = "windspeed", render_mode="webgl")
     fig_wind_dir.update_layout(title_text='Wind direction ', title_x=0.5, title_y=1, )
 
     # fig_absalt5611  = px.line(df,x="x",y= "absaltms5611", title='Absolute altitude ms5611')
