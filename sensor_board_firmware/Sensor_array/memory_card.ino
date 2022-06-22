@@ -86,6 +86,9 @@ void WriteSensorReadingToMemCard()
   
   tempStr = String(pix_relative_alt)+",";
   WriteToFile(SensorDataFile,tempStr);
+
+  tempStr = String(wind_have_new_data)+",";
+  WriteToFile(SensorDataFile,tempStr);
   
   if (NewDataRcvd){
     for (int x = 0 ; x < 768 ; x++)
@@ -205,6 +208,9 @@ void AddFileColHeadings(){
   tempStr = "altitude_gps,";
   WriteToFile(SensorDataFile,tempStr);
   tempStr = "relative_altitude_gps,";
+  WriteToFile(SensorDataFile,tempStr);
+
+  tempStr = "wind_speed_validity,";
   WriteToFile(SensorDataFile,tempStr);
 
   for (int x = 0 ; x < 768 ; x++)

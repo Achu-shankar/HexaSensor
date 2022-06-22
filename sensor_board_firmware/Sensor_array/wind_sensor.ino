@@ -31,6 +31,7 @@ void UpdateWindSensorReading()
   
      }
      wind_indx =0;
+     wind_data_validity = wind_have_new_data;
      digitalWrite(LED_BUILTIN, LOW);
      if (wind_have_new_data){
         strncpy(wind_inp_buffer_temp, wind_inp_buffer, 64);

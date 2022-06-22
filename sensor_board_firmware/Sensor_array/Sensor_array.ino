@@ -72,6 +72,7 @@ int     wind_indx = 0;
 float   wind_speed = 0.0;
 float   wind_angle = 0.0;
 boolean wind_have_new_data = false;
+boolean wind_data_validity = false;
 double  wind_acoustic_temp;
 float   temperature_acoustic_wind_sensor = 0.0;
 char    temp_reading_validity;
