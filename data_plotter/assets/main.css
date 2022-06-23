@@ -1,8 +1,109 @@
+*{
+	margin: 0;
+	padding: 0;
+	/* border: 0; */
+	font-family: 'Lato';
+	vertical-align: baseline;
+    box-sizing: border-box;
+    /* background-color: rgb(6, 11, 13); */
+}
+
+/* H2{
+    font-size: large;
+} */
+body{
+    overflow: hidden;
+    /* background-color: rgb(6, 11, 13); */
+}
+.main-container{
+    display: flex;
+}
+
 .inputfield-header {
-    width: 48%;
+    width: 100%;
     margin: 0px;
     display: inline-block ;
-    text-align: center;
-    padding: 0px;
+    text-align: left;
+    padding: 10px 0px 5px 0px;
+    color:darkblue ;
 }
+
+.section-heading {
+    font-size: large;
+    width: 100%;
+    /* margin: 0px; */
+    display: inline-block ;
+    text-align: center;
+    margin:20px 0px 5px 0px;
+    /* padding: 10px 0px 5px 0px; */
+}
+
+.side-menu{
+    width:30%;
+    /* display: inline-block; */
+    margin: 30px 10px 10px 30px;
+    padding: 0 40px 0px 20px;
+
+    overflow:scroll; 
+    /* overflow-x: hidden;  */
+    height:92vh;
+
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    border: 2px solid rgb(193, 206, 212);
+    border-radius: 5px;
+}
+
+.graph-container{
+    width:67%;
+    position:fixed ;
+    left:35%;
+    top:10%;
+    /* display: block; */
+    float: right;
+    /* top:30%; */
+    
+}
+
+.graph{
+    width:60vw;
+    height:80vh;
+}
+
+.filter-param-name{
+    width:45%;
+
+}
+.filter-param-val{
+    width:48%;
+    float: right;
+    margin: 10px;
+}
+
+
+.side-menu::-webkit-scrollbar-track
+{
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+  box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+  border-radius: 10px;
+  background-color: #F5F5F5;
+}
+
+.side-menu::-webkit-scrollbar
+{
+  width: 6px;
+  height: 6px;
+  background-color: #F5F5F5;
+}
+
+.side-menu::-webkit-scrollbar-thumb
+{
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+  box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+  background-color: rgb(193, 206, 212);
+}
+
+
 

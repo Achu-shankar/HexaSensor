@@ -70,7 +70,10 @@ app.layout = html.Div([
         # Hexa Sensor menu section
         html.Div([
             # Section heading
-            html.H2("Hexa Sensor Input"),
+             html.Div([
+                html.H2("Hexa Sensor Input"),
+            ] ,className = "section-heading"),
+
             # file input section for hexa sensor
             html.Div([
                 html.Div([ html.P(['Hexa sensor filename'],style = {"margin":"0px"})
@@ -79,7 +82,7 @@ app.layout = html.Div([
                 dcc.Dropdown(options = list_of_files_dict,
                             value = list_of_files[0], 
                             id='file-dropdown',multi = True),
-                ],style={"margin": "5px",'width': '48%', 'display': 'inline-block'}),
+                ]),
             
             ]),
 
@@ -92,11 +95,11 @@ app.layout = html.Div([
 
                     html.Div([
                         dcc.Dropdown(
-                            y_axis_vals,
-                            'Wind speed',
-                            id='yaxis-column-hexa-sensor'
+                            x_axis_vals,
+                            'Wind angle',
+                            id='xaxis-column-hexa-sensor'
                         )
-                    ], style={"margin": "0px",'width': '48%', 'float':'right','display': 'inline-block'})
+                    ])
 
                 ]),
                 # Y axis value selector
@@ -109,7 +112,7 @@ app.layout = html.Div([
                             'Wind speed',
                             id='yaxis-column-hexa-sensor'
                         )
-                    ], style={"margin": "0px",'width': '48%', 'float':'right','display': 'inline-block'})
+                    ])
             
                 ]),
                 
@@ -119,20 +122,22 @@ app.layout = html.Div([
             html.Div([
                 html.Div([ html.P(['x filter value'],style = {"margin":"0px"})
                 ], className = "inputfield-header"),
-
                 html.Div([
-                    dcc.Dropdown(
-                        x_axis_vals,
-                        'Wind angle',
-                        id='x-filter-val-hexa',
-                    ),
-                ], style={"margin": "0px",'width': '48%', 'display': 'inline-block'}),
+                    html.Div([
+                        dcc.Dropdown(
+                            x_axis_vals,
+                            'Wind angle',
+                            id='x-filter-val-hexa',
+                        ),
+                        ],className = 'filter-param-name'),
 
-                html.Div([
-                    dcc.Input(id='x-filter-input-hexa', 
-                            type='number',
-                            debounce=True),
-                ], style={"margin": "5px",'width': '48%', 'display': 'inline-block'}),
+                    html.Div([
+                        dcc.Input(id='x-filter-input-hexa', 
+                                type='number',
+                                debounce=True),
+                    ],className = 'filter-param-val'),
+                ], style = {'display':'flex'})
+                
             ])
 
         ]),
@@ -140,7 +145,10 @@ app.layout = html.Div([
         # Radiosonde sensor menu section
         html.Div([
             # Section heading
-            html.H2("Hexa Sensor Input"),
+            html.Div([
+                html.H2("Radiosonde Sensor Input"),
+            ] ,className = "section-heading"),
+            
 
             # File selection section for radiosonde
             html.Div([
@@ -151,11 +159,11 @@ app.layout = html.Div([
                 dcc.Dropdown(options = list_of_files_radiosonde, 
                             value  = list_of_files_radiosonde[0],
                             id='file-dropdown-radiosonde',multi = True),
-                ],style={"margin": "5px",'width': '48%','float': 'right', 'display': 'inline-block'}),
+                ]),
 
             ]),
 
-            # Graph axis value selection section for hexa sensor
+            # Graph axis value selection section for radiosonde
             html.Div([
                 # X axis value selection for radiosonde
                 html.Div([
@@ -169,7 +177,7 @@ app.layout = html.Div([
                             'Wd',
                             id='xaxis-column-radiosonde'
                         ),
-                    ], style={"margin": "0px",'width': '48%', 'display': 'inline-block'}),
+                    ]),
 
                 ]),
 
@@ -185,7 +193,7 @@ app.layout = html.Div([
                             'Ws',
                             id='yaxis-column-radiosonde'
                         )
-                    ], style={"margin": "0px",'width': '48%', 'float':'right','display': 'inline-block'})
+                    ])
            
                 ])
             ]),
@@ -197,25 +205,28 @@ app.layout = html.Div([
                 ], className = "inputfield-header"),
 
                 html.Div([
-                    dcc.Dropdown(
-                        radiosonde_parameter_value_list,
-                        'Wd',
-                        id='x-filter-val-radiosonde',
-                    ),
-                ], style={"margin": "0px",'width': '48%', 'display': 'inline-block'}),
+                    html.Div([
+                        dcc.Dropdown(
+                            radiosonde_parameter_value_list,
+                            'Wd',
+                            id='x-filter-val-radiosonde',
+                        ),
+                    ],className = 'filter-param-name'),
 
-                html.Div([
-                    dcc.Input(id='x-filter-input-radiosonde', 
-                            type='number',
-                            debounce=True),
-                ], style={"margin": "5px",'width': '48%', 'display': 'inline-block'}),
-            ])
+                    html.Div([
+                        dcc.Input(id='x-filter-input-radiosonde', 
+                                type='number',
+                                debounce=True),
+                    ],className = 'filter-param-val'),
+                ], style = {'display':'flex'})
+                
+            ]),
         ]),
         
-        # Graph type selectiokn section
+        # Graph type selection section
         html.Div([
-            html.Div([ html.P(['Plot type'],style = {"margin":"0px"})
-            ], className = "inputfield-header"),
+            html.Div([ html.H2(['Plot type'],style = {"margin":"0px"})
+            ], className = "section-heading"),
 
             html.Div([
                     dcc.Dropdown(type_of_plots,
@@ -225,15 +236,15 @@ app.layout = html.Div([
     
         ])
     
-    ]),
+    ], className = "side-menu"),
 
     # Graph section
     html.Div([
-        dcc.Graph(id='indicator-graphic'),
-    ], className = "graph")
+        dcc.Graph(id='indicator-graphic',className = "graph",),
+    ], className = "graph-container")
     
 
-])
+], className = 'main-container')
 
 
 @app.callback(
@@ -335,12 +346,12 @@ def plot_update(filenames,filenames_radiosonde,
             xaxis_title= xaxis_column,
             yaxis_title= yaxis_column,
             font=dict(
-                size=12
+                size=14
             ),
             legend=dict(
             orientation="h",
             yanchor="bottom",
-            y=1.02,
+            y=-0.5,
             xanchor="right",
             x=1
                 )
@@ -373,17 +384,18 @@ def plot_update(filenames,filenames_radiosonde,
        
         
         fig.update_layout(
+            # height = 400,
             title= yaxis_column + " Vs  " + xaxis_column,
             title_x=0.5,
             xaxis_title= xaxis_column,
             yaxis_title= yaxis_column,
             font=dict(
-                size=12
+                size=16
             ),
             legend=dict(
             orientation="h",
             yanchor="bottom",
-            y=1.02,
+            y=-0.5,
             xanchor="right",
             x=1
                 )
@@ -416,8 +428,9 @@ def plot_update(filenames,filenames_radiosonde,
 
         fig.update_layout(
             title= yaxis_column + " Vs  " + xaxis_column,
+            title_x=0.5,
             font=dict(
-                size=12
+                size=16
             ),
             legend=dict(
             orientation="h",
