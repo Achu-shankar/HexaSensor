@@ -196,9 +196,10 @@ TaskHandle_t Task1;
 //TaskHandle_t Task2;
   
 void setup() {
+//  delay(10000);
   Serial.begin(57600);  
-  pxSerial.begin(57600);
-//  pxSerial.begin(57600,SERIAL_8N1,33,32);
+//  pxSerial.begin(57600);  
+  pxSerial.begin(57600,SERIAL_8N1,33,32);
   Mav_Request_Data();
   delay(50);
   Wire.begin();

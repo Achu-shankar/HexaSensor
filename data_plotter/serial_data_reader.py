@@ -13,7 +13,7 @@ folder_name = config_content['data_folder_path']
 
 ser = serial.Serial()
 ser.port = config_content['serial_port'] #Arduino serial port
-ser.baudrate = 19200
+ser.baudrate = 57600
 ser.timeout = 10 #specify timeout when using readline()
 ser.open()
 if ser.is_open==True:

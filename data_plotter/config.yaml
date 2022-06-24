@@ -1,4 +1,4 @@
-data_folder_path: Live_Data/june_19_test
+data_folder_path: Live_Data/june_24_test3
 processed_data_path: Processed_Data_Copy
 graph_update_interval: 1000
-serial_port: COM20
+serial_port: COM3

@@ -18,7 +18,7 @@ config_content = yaml.load(config_file, Loader=yaml.FullLoader)
 folder_name = config_content['processed_data_path']
 
 
-app = Dash(__name__)
+app = Dash(__name__,assets_url_path = "assets-live")
 base_file_name = "_base.txt"
 base_file_path = os.path.join(folder_name,base_file_name)
 

@@ -104,135 +104,140 @@ def update_graph(interval):
         df = pd.read_csv(io.StringIO('\n'.join(last_lines[1:])), header=None,error_bad_lines=False)
     except Exception as e: 
         print(e)
-    df.rename(columns = {0:'x', 
-                       1:'windspeed',
-                       2:'wind_dir',
-                       3:'wind_ac_temp',
-                       4:'tempms5611',
-                       5:'pressms5611',
-                       6:'absaltms5611',
-                       7:'temp_aht10',
-                       8:'relhumaht10',
-                       10:'roll',
-                       11:'pitch',
-                       12:'yaw',
-                       17:'pix_x',
-                       18:"pix_y",
-                       19:'pix_z',
-                       26:'pix_alt'
-                    }, 
-                    inplace = True)
-    df["pix_z"] = -1*df["pix_z"]
-    df["windspeed"] = 1.94384*df["windspeed"]
-    # print(df.head(3))
-    fig_wind           = px.line(df,x="x",y= "windspeed")
-    fig_wind.update_layout(title_text='Wind speed ', title_x=0.5,title_y=1, xaxis_title="# data point",
-        yaxis_title="Wind Speed(kn)",)
-
-   
-    fig_wind_dir    = px.scatter_polar(df, r="windspeed", theta="wind_dir" ,color="windspeed", size = "windspeed", render_mode="webgl")
-    fig_wind_dir.update_layout(title_text='Wind direction ', title_x=0.5, title_y=1, )
-
-    # fig_absalt5611  = px.line(df,x="x",y= "absaltms5611", title='Absolute altitude ms5611')
-    # fig_absalt5611.update_layout(title_text='Absolute altitude ms5611 ', title_x=0.5)
-
-    fig_pressms5611 = px.line(df,x="x",y= "pressms5611", title='Pressure ms5611')
-    fig_pressms5611.update_layout(title_text='Pressure ms5611', title_x=0.5, xaxis_title="# data point",
-        yaxis_title="Pressure (Pa)",)
-
-    fig_relhumaht10 = px.line(df,x="x",y= "relhumaht10", title='Relative Humidity aht10')
-    fig_relhumaht10.update_layout(title_text='Relative Humidity aht10', title_x=0.5, xaxis_title="# data point",
-        yaxis_title="Relative humidity(%)",)
-
-
-    fig_temp = go.Figure()
-    fig_temp.add_trace(go.Scatter(x=df["x"], y=df["tempms5611"],
-                        mode='lines',
-                        name='MS5611'))
-    fig_temp.add_trace(go.Scatter(x=df["x"], y=df["temp_aht10"],
-                        mode='lines',
-                        name='AHT10'))
-    fig_temp.add_trace(go.Scatter(x=df["x"], y=df["wind_ac_temp"],
-                        mode='lines',
-                        name='Wind Sensor'))
-
-    fig_temp.update_layout(
-        title="Atmospheric Temperature ",
-        title_x=0.5,
-        xaxis_title="# data point",
-        yaxis_title="Temperature  Reading (°C)",
-        font=dict(
-            size=12
-        ),
-        legend=dict(
-        orientation="h",
-        yanchor="bottom",
-        y=1.02,
-        xanchor="right",
-        x=1
-            )
-    )
-
-
-    fig_att = go.Figure()
-    fig_att.add_trace(go.Scatter(x=df["x"], y=df["roll"],
-                        mode='lines',
-                        name='roll'))
-    fig_att.add_trace(go.Scatter(x=df["x"], y=df["pitch"],
-                        mode='lines',
-                        name='pitch'))
-    fig_att.add_trace(go.Scatter(x=df["x"], y=df["yaw"],
-                        mode='lines',
-                        name='yaw'))
-
-    fig_att.update_layout(
-        title="Hexa attitude",
-        title_x=0.5,
-        xaxis_title="# data point",
-        yaxis_title="Rad",
-        font=dict(
-            size=12
-        ),
-        legend=dict(
-        orientation="h",
-        yanchor="bottom",
-        y=1.02,
-        xanchor="right",
-        x=1
-        )
-    )
-
-    fig_pixz = px.line(df,x="x",y= "pix_z", title='Local Altitude')
-    fig_pixz.update_layout(title_text='Relative Altitude', title_x=0.5, xaxis_title="# data point",
-        yaxis_title="Relative altitude(m)")
-
-    # fig_pix_xy = px.line(df,x="pix_x",y= "pix_y", title='Hexa horizontal drift',render_mode='webgl',markers =True)
-    # fig_pix_xy.update_layout(title_text='Hexa horizontal drift', title_x=0.5)
     
-    fig_pix_xy = go.Figure()
-    fig_pix_xy.add_trace(go.Scatter(x=df["pix_x"], y=df["pix_y"],
-                        mode='lines + markers',marker=dict(size=6,
-                              line=dict(width=1,color='DarkSlateGrey'))))
+    if len(df.columns)>10:
+        df.rename(columns = {0:'x', 
+                        1:'windspeed',
+                        2:'wind_dir',
+                        3:'wind_ac_temp',
+                        4:'tempms5611',
+                        5:'pressms5611',
+                        6:'absaltms5611',
+                        7:'temp_aht10',
+                        8:'relhumaht10',
+                        10:'roll',
+                        11:'pitch',
+                        12:'yaw',
+                        17:'pix_x',
+                        18:"pix_y",
+                        19:'pix_z',
+                        26:'pix_alt'
+                        }, 
+                        inplace = True)
+        df["pix_z"] = -1*df["pix_z"]
+        df["windspeed"] = 1.94384*df["windspeed"]
+        # print(df.head(3))
+        fig_wind           = px.line(df,x="x",y= "windspeed")
+        fig_wind.update_layout(title_text='Wind speed ', title_x=0.5,title_y=1, xaxis_title="# data point",
+            yaxis_title="Wind Speed(kn)",)
 
-    fig_pix_xy.update_layout(title_text='Hexa horizontal drift', title_x=0.5, xaxis_title="local x pos (m)",
-        yaxis_title="local y pos(m)")
+    
+        fig_wind_dir    = px.scatter_polar(df, r="windspeed", theta="wind_dir" ,color="windspeed", size = "windspeed", render_mode="webgl")
+        fig_wind_dir.update_layout(title_text='Wind direction ', title_x=0.5, title_y=1, )
+
+        # fig_absalt5611  = px.line(df,x="x",y= "absaltms5611", title='Absolute altitude ms5611')
+        # fig_absalt5611.update_layout(title_text='Absolute altitude ms5611 ', title_x=0.5)
+
+        fig_pressms5611 = px.line(df,x="x",y= "pressms5611", title='Pressure ms5611')
+        fig_pressms5611.update_layout(title_text='Pressure ms5611', title_x=0.5, xaxis_title="# data point",
+            yaxis_title="Pressure (Pa)",)
+
+        fig_relhumaht10 = px.line(df,x="x",y= "relhumaht10", title='Relative Humidity aht10')
+        fig_relhumaht10.update_layout(title_text='Relative Humidity aht10', title_x=0.5, xaxis_title="# data point",
+            yaxis_title="Relative humidity(%)",)
 
 
-    # fig_pix_xy = {}
-    fig_wind_dir.add_annotation(dict(font=dict(color='black',size=18 ),
-                                        x=0.5,
-                                        y=1.15,
-                                        showarrow=False,
-                                        text="N",
-                                        textangle=0,
-                                        xanchor='center',
-                                        xref="paper",
-                                        yref="paper"))
+        fig_temp = go.Figure()
+        fig_temp.add_trace(go.Scatter(x=df["x"], y=df["tempms5611"],
+                            mode='lines',
+                            name='MS5611'))
+        fig_temp.add_trace(go.Scatter(x=df["x"], y=df["temp_aht10"],
+                            mode='lines',
+                            name='AHT10'))
+        fig_temp.add_trace(go.Scatter(x=df["x"], y=df["wind_ac_temp"],
+                            mode='lines',
+                            name='Wind Sensor'))
 
-    fig_wind_dir.update_layout(coloraxis_colorbar=dict(
-            title="Wind Speed",
-            thicknessmode="pixels", thickness=20
-        ))
+        fig_temp.update_layout(
+            title="Atmospheric Temperature ",
+            title_x=0.5,
+            xaxis_title="# data point",
+            yaxis_title="Temperature  Reading (°C)",
+            font=dict(
+                size=12
+            ),
+            legend=dict(
+            orientation="h",
+            yanchor="bottom",
+            y=1.02,
+            xanchor="right",
+            x=1
+                )
+        )
+
+
+        fig_att = go.Figure()
+        fig_att.add_trace(go.Scatter(x=df["x"], y=df["roll"],
+                            mode='lines',
+                            name='roll'))
+        fig_att.add_trace(go.Scatter(x=df["x"], y=df["pitch"],
+                            mode='lines',
+                            name='pitch'))
+        fig_att.add_trace(go.Scatter(x=df["x"], y=df["yaw"],
+                            mode='lines',
+                            name='yaw'))
+
+        fig_att.update_layout(
+            title="Hexa attitude",
+            title_x=0.5,
+            xaxis_title="# data point",
+            yaxis_title="Rad",
+            font=dict(
+                size=12
+            ),
+            legend=dict(
+            orientation="h",
+            yanchor="bottom",
+            y=1.02,
+            xanchor="right",
+            x=1
+            )
+        )
+
+        fig_pixz = px.line(df,x="x",y= "pix_z", title='Local Altitude')
+        fig_pixz.update_layout(title_text='Relative Altitude', title_x=0.5, xaxis_title="# data point",
+            yaxis_title="Relative altitude(m)")
+
+        # fig_pix_xy = px.line(df,x="pix_x",y= "pix_y", title='Hexa horizontal drift',render_mode='webgl',markers =True)
+        # fig_pix_xy.update_layout(title_text='Hexa horizontal drift', title_x=0.5)
+        
+        fig_pix_xy = go.Figure()
+        fig_pix_xy.add_trace(go.Scatter(x=df["pix_x"], y=df["pix_y"],
+                            mode='lines + markers',marker=dict(size=6,
+                                line=dict(width=1,color='DarkSlateGrey'))))
+
+        fig_pix_xy.update_layout(title_text='Hexa horizontal drift', title_x=0.5, xaxis_title="local x pos (m)",
+            yaxis_title="local y pos(m)")
+
+
+        # fig_pix_xy = {}
+        fig_wind_dir.add_annotation(dict(font=dict(color='black',size=18 ),
+                                            x=0.5,
+                                            y=1.15,
+                                            showarrow=False,
+                                            text="N",
+                                            textangle=0,
+                                            xanchor='center',
+                                            xref="paper",
+                                            yref="paper"))
+
+        fig_wind_dir.update_layout(coloraxis_colorbar=dict(
+                title="Wind Speed",
+                thicknessmode="pixels", thickness=20
+            ))
+    else:
+        container, fig_wind,fig_wind_dir, fig_temp, fig_pressms5611,fig_relhumaht10,fig_att, fig_pixz, fig_pix_xy = {}
+
 
     
 
